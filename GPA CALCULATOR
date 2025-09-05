@@ -73,7 +73,7 @@ namespace GradePointAverageCalculator
 
                         Console.WriteLine("Enter Score (0 - 100)");
                         Console.Write(">> ");
-                        if (!int.TryParse(Console.ReadLine(), out score[count]) || score[count] < 0 || score[count] > 100)                       while (score[count] < 0 || score[count] > 100)
+                        if (!int.TryParse(Console.ReadLine(), out score[count]) || score[count] < 0 || score[count] > 100)
                         { 
                             Console.WriteLine($"WRONG INPUT! Enter the correct value (0 - 100) ({count})");
                             Console.Write(">> ");
@@ -167,4 +167,4 @@ namespace GradePointAverageCalculator
         }
             
     }
-}v
+}
