@@ -1,0 +1,170 @@
+using System;
+using System.Management.Instrumentation;
+using System.Runtime.InteropServices;
+namespace GradePointAverageCalculator
+{
+    public class GPAcalc
+    {
+        
+        public int totalCourseUnit = 0, totalScore = 0, score = 0, courseUnit = 0, gradeUnit = 0;
+        public int courseUnitPassed = 0, numberOfCourses, count = 0;
+        public double gpaCalculation = 0, totalWeightPoint = 0, weightPoint = 0;
+        public char grade;
+        public string remark, courseCode;
+        
+                   
+
+        public void ResultTableHeading()
+        {   
+            Console.WriteLine("|----------------|----------------|----------|---------------|-----------------|------------|");
+            Console.WriteLine("| COURSE & CODE  | COURSE UNIT    | GRADE    | GRADE UNIT    | WEIGHT POINT    | REMARK     |");
+            Console.WriteLine("|----------------|----------------|----------|---------------|-----------------|------------|");
+        }
+        
+        public void ResultSummary()
+        {
+            Console.WriteLine($"Total Course Unit is {totalCourseUnit}");
+            Console.WriteLine($"Total Course Unit Passed is {courseUnitPassed}");
+            Console.WriteLine($"Total score is {totalScore}");
+            Console.WriteLine($"Total Weight Point is {totalWeightPoint}");
+            Console.WriteLine($"Grade Point Average is {gpaCalculation}");
+            return;
+        }
+        public void CourseDetails()
+        {   CourseDetails:
+            Console.WriteLine("Enter The total number of courses offered");
+            Console.Write(">> ");
+            while (!int.TryParse(Console.ReadLine(), out numberOfCourses) || numberOfCourses <= 0)
+            {
+                Console.WriteLine("Invalid input, please enter a valid number instead");
+            }
+            Console.WriteLine("-----------------------");
+
+            string[] courseCode = new string[numberOfCourses];
+            int[] courseUnit = new int[numberOfCourses];
+            int[] score = new int[numberOfCourses];
+            char[] grade = new char[numberOfCourses];
+            int[] gradeUnit = new int[numberOfCourses];
+            int[] weightPoint = new int[numberOfCourses];
+            string[] remark = new string[numberOfCourses];
+
+            for (count = 0; count < numberOfCourses; count++) 
+                {
+                        Console.WriteLine($"\nCOURSE DETAILS: ({count + 1})");
+                        
+                        Console.WriteLine($"Enter Course and code");
+                        Console.Write(">> ");
+                        courseCode[count] = Console.ReadLine().ToUpper();
+                
+                        Console.WriteLine("Enter Course Unit");
+                        Console.Write(">> ");
+                        if (!int.TryParse(Console.ReadLine(), out courseUnit[count]) || courseUnit[count] < 1 || courseUnit[count] > 9)
+                        {
+                            Console.WriteLine("Wrong Value! Enter the correct Course Unit");
+                            Console.Write(">> ");
+                            int.TryParse(Console.ReadLine(), out courseUnit[count]);
+                        }
+                        totalCourseUnit += courseUnit[count];
+                        if (totalCourseUnit > 24)
+                        {
+                            Console.WriteLine("\n***Maximum (24) Unit Load Exceeded! DO NOT EXCEED MAXIMUM UNIT LOAD THIS TIME***");
+                            goto CourseDetails;
+                        }
+
+                        Console.WriteLine("Enter Score (0 - 100)");
+                        Console.Write(">> ");
+                        if (!int.TryParse(Console.ReadLine(), out score[count]) || score[count] < 0 || score[count] > 100)                       while (score[count] < 0 || score[count] > 100)
+                        { 
+                            Console.WriteLine($"WRONG INPUT! Enter the correct value (0 - 100) ({count})");
+                            Console.Write(">> ");
+                            int.TryParse (Console.ReadLine(), out score[count]);
+                        }
+                        if (score[count] <= 39)
+                        {
+                            gradeUnit[count] = 0;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'F';
+                            remark[count] = "Fail     ";
+                        
+                        }
+                        else if (score[count] <= 44)
+                        {
+                            gradeUnit[count] = 1;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'E';
+                            remark[count] = "Pass     ";      
+                        }
+
+                        else if (score[count] <= 49)
+                        {
+                            gradeUnit[count]     = 2;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'D';
+                            remark[count] = "Fair     ";        
+                        }
+                        else if (score[count] <= 59)
+                        {
+                            gradeUnit[count] = 3;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'C';
+                            remark[count] = "Good     ";                        
+                        }
+                        else if (score[count] <= 69)
+                        {
+                            gradeUnit[count] = 4;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'B';
+                            remark[count] = "Very Good";                        
+                        }
+                        else if (score[count] <= 100)
+                        {
+                            gradeUnit[count] = 5;
+                            weightPoint[count] = courseUnit[count] * gradeUnit[count];
+                            grade[count] = 'A';
+                            remark[count] = "Excellent";                       
+                        }
+
+                        if (score[count] > 39)
+                        {
+                            courseUnitPassed += courseUnit[count];
+                        }
+                                                
+                    Console.WriteLine("*****************************************");
+
+                    totalScore += score[count];
+                    totalWeightPoint += weightPoint[count];
+                    gpaCalculation = Math.Round((totalWeightPoint / totalCourseUnit), 2);
+                    
+
+                }
+                ResultTableHeading();
+                for (count= 0; count < numberOfCourses; count++)
+                {
+                Console.WriteLine($"| {courseCode[count]}         | {courseUnit[count]}              | {grade[count]}        | {gradeUnit[count]}             | {weightPoint[count]}              | {remark[count]} |");
+                Console.WriteLine($"|________________|________________|__________|________________|_________________|____________|");
+            }
+                
+        }
+    }
+
+
+    public class PrintTable
+        
+    {
+        
+        public static void Main(string[] args)
+        {
+
+            GPAcalc Pt = new GPAcalc();
+
+            Pt.CourseDetails();
+            Console.WriteLine(" ");
+
+
+            Console.WriteLine(" ");
+            Pt.ResultSummary();
+
+        }
+            
+    }
+}v
