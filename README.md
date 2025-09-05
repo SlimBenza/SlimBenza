@@ -1,6 +1,5 @@
 - 👋 Hi, I’m @SlimBenza
-- 👀 I’m interested in developing a long-term Telegram chatbot
-- 🌱 I’m currently learning about chatbots
+- 👀 I’m interested in developing a long-term C#.net
 - 💞️ I’m looking forward to collaborate on developing more amazing programs
 - 📫 How to reach me: reach me on ebukabenza24@gmail.com. 
 
